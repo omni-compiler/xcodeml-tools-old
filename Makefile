@@ -1,8 +1,8 @@
 .PHONY: all install clean tests clean-tests run-tests tests-F2003 clean-tests-F2003 run-tests-F2003 large-tests clean-large-tests run-large-tests release remote-tests distclean submit-tests submit1-tests submit2-tests submit3-tests submit4-tests showlog-tests cleanlog-tests submit-large-tests showlog-large-tests cleanlog-large-tests
 
-INSTALL=@INSTALL@
-BINDIR=@OMNI_HOME@/bin
-T_FJMODULE=@T_FJMODULE@
+INSTALL=install
+BINDIR=/home/mnakao/work/xmp-trunk/bin
+T_FJMODULE=1
 T_FJMODULE_REMOTE=http://omni-compiler.org/T_FJModule/20170523
 T_FJMODULE_LOCAL=T_FJModule
 
@@ -12,23 +12,23 @@ SUBDIRS=libxmp/include libxmp/src libxmpf/include libxmpf/src libxmp/src_threads
 
 FALSE=1
 TRUE=0
-NEED_MAKE_MOD2XMOD=@NEED_MAKE_MOD2XMOD@
+NEED_MAKE_MOD2XMOD=1
 USER=$(shell whoami)
 ifeq ($(NEED_MAKE_MOD2XMOD), $(TRUE))
     SUBDIRS+=F-FrontEnd/gnu_module
 endif
 
-IS_SUPERUX=@SUPERUX@
+IS_SUPERUX=1
 ifeq ($(IS_SUPERUX), $(FALSE))
     SUBDIRS+=libompc/src libompf/src
 endif
 
-IS_ACC=@ACC@
+IS_ACC=1
 ifeq ($(IS_ACC), $(TRUE))
     SUBDIRS+=libacc/src libacc/include
 endif
 
-IS_ATOOL=@ATOOL@
+IS_ATOOL=1
 ifeq ($(IS_ATOOL), $(TRUE))
     SUBDIRS+=Driver/atool
 endif
@@ -71,7 +71,7 @@ TESTDIRS3  =   "global-view/align/C-Square"     "global-view/align/C-Round"     
                "global-view/intrinsic/F" \
 	       "global-view/util/C-Square"      "global-view/util/C-Round"      "global-view/util/F/" \
                "others/C" "others/F"
-IS_MPI3_ASYNC=@MPI3_ASYNC@
+IS_MPI3_ASYNC=0
 ifeq ($(IS_MPI3_ASYNC), $(TRUE))
    TESTDIRS3 += "global-view/async/C-Square" "global-view/async/C-Round" "global-view/async/F"
 endif
@@ -80,7 +80,7 @@ LARGE_TESTDIRS = "others/C"
 
 # "global-view/intrinsic/C/" includes imaginary numbers.
 # But SUPERUX and POWERPC cannot deal with imaginary numbers.
-IS_SUPERUX_OR_POWERPC=@SUPERUX_OR_POWERPC@
+IS_SUPERUX_OR_POWERPC=1
 ifeq ($(IS_SUPERUX_OR_POWERPC), $(FALSE))
    TESTDIRS3 += "global-view/intrinsic/C-Square" "global-view/intrinsic/C-Round"
 endif
@@ -94,7 +94,7 @@ TESTDIRS4 = "local-view/coarray/C" "local-view/other/C" "local-view/other/F" \
 TESTDIRS  = $(TESTDIRS1) $(TESTDIRS2) $(TESTDIRS3) $(TESTDIRS4)
 TESTF2003DIR = $(BASE_TESTDIR)/Fortran2003
 
-IS_GASNET=@GASNET@
+IS_GASNET=0
 ifeq ($(IS_GASNET), $(TRUE))
    TESTDIRS_GAS = "local-view/post-wait/C" "local-view/lock-unlock/C" "local-view/intrinsic/C"
    TESTDIRS += $(TESTDIRS_GAS)
@@ -104,7 +104,7 @@ else
    TESTDIRS_GAS = 
 endif
 
-IS_FJRDMA=@FJRDMA@
+IS_FJRDMA=1
 ifeq ($(IS_FJRDMA), $(TRUE))
    TESTDIRS_FJR = "local-view/post-wait/C" 
    TESTDIRS += $(TESTDIRS_FJR)
@@ -114,7 +114,7 @@ else
    TESTDIRS_FJR = 
 endif
 
-IS_MPI3_ONESIDED=@MPI3_ONESIDED@
+IS_MPI3_ONESIDED=1
 ifeq ($(IS_MPI3_ONESIDED), $(TRUE))
    TESTDIRS_MP3 = 
    TESTDIRS += $(TESTDIRS_MP3)
